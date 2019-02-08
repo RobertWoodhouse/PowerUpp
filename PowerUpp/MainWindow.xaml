@@ -24,12 +24,6 @@
 
     <Grid>
         <Label x:Name="lblHeader" Content="Welcome to Power Upp" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" Height="51" Width="323" FontSize="28" RenderTransformOrigin="0.49,1.653"/>
-        <ComboBox x:Name="cboExercise" ItemsSource="{Binding Source={StaticResource enuExercise}}" HorizontalAlignment="Left" Margin="151,122,0,0" VerticalAlignment="Top" Width="166" Height="26" SelectionChanged="cboExercise_SelectionChanged"/>
-        <Label x:Name="lblExe" Content="Exercise:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,122,0,0" Width="62" RenderTransformOrigin="0.581,0.508" FontSize="14"/>
-        <ComboBox x:Name="cboSets" ItemsSource="{Binding Source={StaticResource enuSets}}"  HorizontalAlignment="Left" Height="26" Margin="467,122,0,0" VerticalAlignment="Top" Width="166" SelectionChanged="cboSets_SelectionChanged"/>
-        <Label x:Name="lblSet" Content="Sets:" HorizontalAlignment="Left" Margin="428,122,0,0" VerticalAlignment="Top" FontSize="14"/>
-        <Button x:Name="btnNext" Content="Next &gt;&gt;" HorizontalAlignment="Left" Margin="553,354,0,0" VerticalAlignment="Top" Width="80" Click="btnNext_Click" Height="24"/>
-        <TextBox x:Name="txbSets" HorizontalAlignment="Left" Height="26" Margin="638,122,0,0" TextWrapping="Wrap" Text="&lt;Enter&gt;" VerticalAlignment="Top" Width="50" TextChanged="txbSets_TextChanged" RenderTransformOrigin="-0.006,0.589"/>
         <Image x:Name="imgBackground" Source="Images/ExercisePic.jpg" HorizontalAlignment="Left" Height="236" Margin="48,162,0,0" VerticalAlignment="Top" Width="327"/>
         <Button x:Name="btnLoadXl" Content="Load" HorizontalAlignment="Left" Margin="553,249,0,0" VerticalAlignment="Top" Width="75" Click="btnLoadXl_Click"/>
         <Button x:Name="btnCreateXl" Content="Create" HorizontalAlignment="Left" Margin="553,296,0,0" VerticalAlignment="Top" Width="75"/>
