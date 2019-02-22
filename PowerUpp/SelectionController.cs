@@ -7,9 +7,11 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PowerUpp
 {
-    class TableController
-    {  
-        /*
+    enum Exercise { Push_Ups = 2, Squats = 3, Reverse_Leg_Lift = 4, Dumbbell_Side_Bend = 5, Dumbbell_Curls = 6, Standing_Lunges = 7, Boxing = 8, Just_Dance = 9, Sit_Ups = 10, Shoulder_Press = 11 }; // Column A
+    enum Sets { Three_Sets = 2, Two_Sets, One_Set, Misc }; // Row 1
+    
+    class SelectionController
+    {
         string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
         public static bool loadFile;
 
@@ -102,6 +104,5 @@ namespace PowerUpp
             if (var == true) LoadWorkbook(filePath);
             else CreateWorkbook();
         }
-        */
     }
 }

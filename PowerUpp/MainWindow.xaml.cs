@@ -21,72 +21,25 @@ namespace PowerUpp
 
     public partial class MainWindow : Window
     {
-        /*
-        Enum selectedExercise;
-        Enum selectedSets;
-        string updateCells;
-        */
-
-        TableController tableControl = new TableController();
+        //TableController tableControl = new TableController();
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        /*
-        private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedExercise = (Enum)cboExercise.SelectedItem;
-        }
-
-        private void cboSets_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedSets = (Enum)cboSets.SelectedItem;
-        }
-
-        private void txbSets_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            updateCells = txbSets.Text;
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            // Error message box for incorrect values
-            bool nan = int.TryParse(updateCells, out int tempInt);
-
-            if (selectedExercise == null)
-            {
-                MessageBox.Show ("Invalid selection, please select Exercise", "Invalid selection");
-                return;
-            }
-
-            if (selectedSets == null)
-            {
-                MessageBox.Show("Invalid selection, please select Sets", "Invalid selection");
-                return;
-            }
-
-            if (!nan)
-            {
-                MessageBox.Show('"' + updateCells + '"' + " is not a valid number, please enter number of sets", "Invalid value");
-                return;
-            }
-
-            if (tempInt <= 0)
-            {
-                MessageBox.Show('"' + updateCells + '"' + " in not a valid number, please enter number larger than 0", "Invalid value");
-                return;
-            }
-
-            tableControl.OpenWorkbook();
-            tableControl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
-        }
-        */
-
         private void btnLoadXl_Click(object sender, RoutedEventArgs e)
         {
-            MainMenu.Content = new TableView();
+            //frmMainMenu.Content = new TableView();
+            this.Content = new SelectionView();
+            SelectionController.loadFile = true;
+        }
+
+        private void btnCreateXl_Click(object sender, RoutedEventArgs e)
+        {
+            //frmMainMenu.Content = new TableView();
+            this.Content = new SelectionView();
+            SelectionController.loadFile = false;
         }
     }
 }

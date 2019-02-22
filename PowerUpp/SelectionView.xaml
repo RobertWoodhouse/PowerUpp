@@ -1,0 +1,37 @@
+﻿<Page x:Class="PowerUpp.SelectionView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PowerUpp"
+      xmlns:codeg="clr-namespace:System;assembly=mscorlib" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Power Upp">
+
+    <Page.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuExercise">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:Exercise" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuSets">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:Sets" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Page.Resources>
+
+    <Grid>
+        <Image x:Name="imgBackground" Source="Images/ExercisePic.jpg" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="476" Opacity="0.1"/>
+        <Label x:Name="lblHeader" Content="Select Exercise and Sets" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" Height="51" Width="323" FontSize="28" RenderTransformOrigin="0.49,1.653"/>
+        <ComboBox x:Name="cboExercise" ItemsSource="{Binding Source={StaticResource enuExercise}}" HorizontalAlignment="Left" Margin="151,122,0,0" VerticalAlignment="Top" Width="166" Height="26" SelectionChanged="cboExercise_SelectionChanged"/>
+        <Label x:Name="lblExe" Content="Exercise:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,122,0,0" Width="62" RenderTransformOrigin="0.581,0.508" FontSize="14"/>
+        <ComboBox x:Name="cboSets" ItemsSource="{Binding Source={StaticResource enuSets}}"  HorizontalAlignment="Left" Height="26" Margin="467,122,0,0" VerticalAlignment="Top" Width="166" SelectionChanged="cboSets_SelectionChanged"/>
+        <Label x:Name="lblSet" Content="Sets:" HorizontalAlignment="Left" Margin="428,122,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox x:Name="txbSets" HorizontalAlignment="Left" Height="26" Margin="638,122,0,0" TextWrapping="Wrap" Text="&lt;Enter&gt;" VerticalAlignment="Top" Width="50" TextChanged="txbSets_TextChanged" RenderTransformOrigin="-0.006,0.589"/>
+        <Button x:Name="btnNext" Content="Next &gt;&gt;" HorizontalAlignment="Left" Margin="588,392,0,0" VerticalAlignment="Top" Width="100" Click="btnNext_Click" Height="24"/>
+        <Button x:Name="btnPrevious" Content="&lt;&lt; Previous" HorizontalAlignment="Left" Margin="89,392,0,0" VerticalAlignment="Top" Width="100" Click="btnPrevious_Click" Height="24" RenderTransformOrigin="0.271,0.778"/>
+    </Grid>
+</Page>

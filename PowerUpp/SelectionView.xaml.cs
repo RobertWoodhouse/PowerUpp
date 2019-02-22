@@ -16,23 +16,21 @@ using System.Windows.Shapes;
 namespace PowerUpp
 {
     /// <summary>
-    /// Interaction logic for TableView.xaml
+    /// Interaction logic for SelectionView.xaml
     /// </summary>
-    public partial class TableView : Page
+    public partial class SelectionView : Page
     {
-        /*
         Enum selectedExercise;
         Enum selectedSets;
-        string updateCells; 
+        string updateCells;
 
-        TableController tableControl = new TableController();
-        */
+        SelectionController selectCtrl = new SelectionController();
 
-        public TableView()
+        public SelectionView()
         {
             InitializeComponent();
         }
-        /*
+
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedExercise = (Enum)cboExercise.SelectedItem;
@@ -77,14 +75,13 @@ namespace PowerUpp
                 return;
             }
 
-            tableControl.OpenWorkbook(TableController.loadFile);
-            tableControl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            selectCtrl.OpenWorkbook(SelectionController.loadFile);
+            selectCtrl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
             //this.Content = new MainWindow();
         }
-        */
     }
 }
