@@ -20,16 +20,16 @@ namespace PowerUpp
     /// </summary>
     public partial class SelectionView : Page
     {
-        Enum selectedExercise;
-        Enum selectedSets;
-        string updateCells;
-
-        SelectionController selectCtrl = new SelectionController();
-
         public SelectionView()
         {
             InitializeComponent();
         }
+
+        Enum selectedExercise;
+        Enum selectedSets;
+        string updateCells;
+
+        //SelectionController selectCtrl = new SelectionController(); // CAUTION causes infinte Excel load
 
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -75,13 +75,23 @@ namespace PowerUpp
                 return;
             }
 
-            selectCtrl.OpenWorkbook(SelectionController.loadFile);
-            selectCtrl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            // Open Excel table file
+            
+            //selectCtrl.OpenWorkbook(SelectionController.loadFile);
+            //selectCtrl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            
+
+            // Open content into TableView with table
+            //this.Content = new TableView();
+
+            // TEST Open content into Frame with table
+            frmMainMenu.Content = new TableView();
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
             //this.Content = new MainWindow();
         }
+        
     }
 }

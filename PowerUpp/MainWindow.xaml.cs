@@ -30,15 +30,17 @@ namespace PowerUpp
 
         private void btnLoadXl_Click(object sender, RoutedEventArgs e)
         {
-            //frmMainMenu.Content = new TableView();
+            //frmMainMenu.Content = new SelectionView();
             this.Content = new SelectionView();
+            //this.Content = new TableView(); //TEST
             SelectionController.loadFile = true;
         }
 
-        private void btnCreateXl_Click(object sender, RoutedEventArgs e)
+        private void btnNewXl_Click(object sender, RoutedEventArgs e)
         {
-            //frmMainMenu.Content = new TableView();
+            //frmMainMenu.Content = new SelectionView();
             this.Content = new SelectionView();
+            //this.Content = new TableView(); //TEST
             SelectionController.loadFile = false;
         }
     }

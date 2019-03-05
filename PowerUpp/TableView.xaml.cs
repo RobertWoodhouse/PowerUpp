@@ -20,71 +20,11 @@ namespace PowerUpp
     /// </summary>
     public partial class TableView : Page
     {
-        /*
-        Enum selectedExercise;
-        Enum selectedSets;
-        string updateCells; 
-
-        TableController tableControl = new TableController();
-        */
-
         public TableView()
         {
             InitializeComponent();
+            TableController excelData = new TableController();
+            this.dgTable.DataContext = excelData;
         }
-        /*
-        private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedExercise = (Enum)cboExercise.SelectedItem;
-        }
-
-        private void cboSets_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            selectedSets = (Enum)cboSets.SelectedItem;
-        }
-
-        private void txbSets_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            updateCells = txbSets.Text;
-        }
-
-        private void btnNext_Click(object sender, RoutedEventArgs e)
-        {
-            // Error message box for incorrect values
-            bool nan = int.TryParse(updateCells, out int tempInt);
-
-            if (selectedExercise == null)
-            {
-                MessageBox.Show("Invalid selection, please select Exercise", "Invalid selection");
-                return;
-            }
-
-            if (selectedSets == null)
-            {
-                MessageBox.Show("Invalid selection, please select Sets", "Invalid selection");
-                return;
-            }
-
-            if (!nan)
-            {
-                MessageBox.Show('"' + updateCells + '"' + " is not a valid number, please enter number of sets", "Invalid value");
-                return;
-            }
-
-            if (tempInt <= 0)
-            {
-                MessageBox.Show('"' + updateCells + '"' + " in not a valid number, please enter number larger than 0", "Invalid value");
-                return;
-            }
-
-            tableControl.OpenWorkbook(TableController.loadFile);
-            tableControl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
-        }
-
-        private void btnPrevious_Click(object sender, RoutedEventArgs e)
-        {
-            //this.Content = new MainWindow();
-        }
-        */
     }
 }

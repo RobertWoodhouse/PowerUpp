@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -8,21 +10,51 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace PowerUpp
 {
     class TableController
-    {  
-        /*
+    {
         string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
+
+        public DataView Data
+        {
+            get
+            {
+                Excel.Application xlApp = new Excel.Application(); // Create new excel app
+                Excel.Workbook xlWorkbook; // New workbook
+                Excel.Worksheet xlWorksheet; // New worksheet  
+                Excel.Range range;
+                //xlApp.Visible = true;
+                xlWorkbook = xlApp.Workbooks.Open(filePath);
+                xlWorksheet = xlWorkbook.Worksheets[1];
+
+                int column = 0;
+                int row = 0;
+
+                range = xlWorksheet.UsedRange;
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Exercise");
+                dt.Columns.Add("3 Sets");
+                dt.Columns.Add("2 Sets");
+                dt.Columns.Add("1 Set (Default)");
+                dt.Columns.Add("Misc");
+                for (row = 2; row <= range.Rows.Count; row++)
+                {
+                    DataRow dr = dt.NewRow();
+                    for (column = 1; column <= range.Columns.Count; column++)
+                    {
+                        //dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2.ToString();
+                        dr[column - 1] = (range.Cells[row, column] as Excel.Range);
+                        //dr[column - 1] = 2;
+                    }
+                    dt.Rows.Add(dr);
+                    dt.AcceptChanges();
+                }
+                xlWorkbook.Close(true, Missing.Value, Missing.Value);
+                xlApp.Quit();
+                return dt.DefaultView;
+            }
+        }
+        /*
         public static bool loadFile;
 
-        Excel.Application xlApp = new Excel.Application(); // Create new excel app
-        Excel.Workbook xlWorkbook; // New workbook
-        Excel.Worksheet xlWorksheet; // New worksheet  
-
-        public void LoadWorkbook(string var)
-        {
-            xlApp.Visible = true;
-            xlWorkbook = xlApp.Workbooks.Open(var);
-            xlWorksheet = xlWorkbook.Worksheets[1];
-        }
 
         public void CreateWorkbook() // TEMP
         {
@@ -79,29 +111,6 @@ namespace PowerUpp
             xlApp.Quit();
         }
 
-        public void EditWorksheetCell(Enum exercise, Enum sets, string updateCell)
-        {
-            try
-            {
-                Console.WriteLine("Enter cell... ");
-                xlWorksheet.Cells[exercise, sets] = updateCell;
-            }
-            catch (Exception exMessage)
-            {
-                Console.WriteLine("Error message " + exMessage);
-            }
-            finally // TODO: sort save
-            {
-                //SaveAndQuit(true);
-                //SaveAndQuit(false);
-            }
-        }
-
-        public void OpenWorkbook(bool var)
-        {
-            if (var == true) LoadWorkbook(filePath);
-            else CreateWorkbook();
-        }
         */
     }
 }
