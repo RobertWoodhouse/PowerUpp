@@ -66,6 +66,9 @@
     <Compile Include="SelectionView.xaml.cs">
       <DependentUpon>SelectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StartView.xaml.cs">
+      <DependentUpon>StartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TableController.cs" />
     <Compile Include="TableView.xaml.cs">
       <DependentUpon>TableView.xaml</DependentUpon>
@@ -83,6 +86,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
