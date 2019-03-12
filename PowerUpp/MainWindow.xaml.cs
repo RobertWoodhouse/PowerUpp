@@ -26,22 +26,7 @@ namespace PowerUpp
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void btnLoadXl_Click(object sender, RoutedEventArgs e)
-        {
-            //frmMainMenu.Content = new SelectionView();
-            this.Content = new SelectionView();
-            //this.Content = new TableView(); //TEST
-            SelectionController.loadFile = true;
-        }
-
-        private void btnNewXl_Click(object sender, RoutedEventArgs e)
-        {
-            //frmMainMenu.Content = new SelectionView();
-            this.Content = new SelectionView();
-            //this.Content = new TableView(); //TEST
-            SelectionController.loadFile = false;
+            frmMainMenu.Content = new StartView();
         }
     }
 }

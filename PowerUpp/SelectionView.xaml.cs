@@ -85,7 +85,7 @@ namespace PowerUpp
             //this.Content = new TableView();
 
             // TEST Open content into Frame with table
-            frmMainMenu.Content = new TableView();
+            //frmMainMenu.Content = new TableView();
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
