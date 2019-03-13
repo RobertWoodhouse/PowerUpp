@@ -76,21 +76,23 @@ namespace PowerUpp
             }
 
             // Open Excel table file
-            
+
             //selectCtrl.OpenWorkbook(SelectionController.loadFile);
             //selectCtrl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
-            
+
 
             // Open content into TableView with table
             //this.Content = new TableView();
 
             // TEST Open content into Frame with table
             //frmMainMenu.Content = new TableView();
+            NavigationService.Content = new TableView();
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
             //this.Content = new MainWindow();
+            NavigationService.Content = new StartView();
         }
         
     }

@@ -10,7 +10,6 @@
       Title="StartView">
 
     <Grid>
-        <Image x:Name="imgBackground" Source="Images/ExercisePic.jpg" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="476" Opacity="0.1"/>
         <Label x:Name="lblHeader" Content="Welcome to Power Upp" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" Height="51" Width="323" FontSize="28" RenderTransformOrigin="0.49,1.653"/>
         <Button x:Name="btnLoadXl" Content="Load" HorizontalAlignment="Left" Margin="553,239,0,0" VerticalAlignment="Top" Width="75" Click="btnLoadXl_Click" Height="20"/>
         <Button x:Name="btnNewXl" Content="New" HorizontalAlignment="Left" Margin="553,296,0,0" VerticalAlignment="Top" Width="75" Click="btnNewXl_Click" Grid.ColumnSpan="4" Height="20"/>
