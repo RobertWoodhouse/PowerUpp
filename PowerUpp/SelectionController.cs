@@ -21,14 +21,14 @@ namespace PowerUpp
 
         public void LoadWorkbook(string var)
         {
-            xlApp.Visible = true;
+            //xlApp.Visible = true; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Open(var);
             xlWorksheet = xlWorkbook.Worksheets[1];
         }
 
         public void CreateWorkbook() // TEMP
         {
-            xlApp.Visible = true;
+            //xlApp.Visible = true; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Add();
             xlWorksheet = xlWorkbook.Worksheets[1]; // Worksheet the data is written onto
 
@@ -94,7 +94,7 @@ namespace PowerUpp
             }
             finally // TODO: sort save
             {
-                //SaveAndQuit(true);
+                SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into .NET table
                 //SaveAndQuit(false);
             }
         }

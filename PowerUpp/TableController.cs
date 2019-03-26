@@ -41,7 +41,7 @@ namespace PowerUpp
                     for (column = 1; column <= range.Columns.Count; column++)
                     {
                         //dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2.ToString();
-                        dr[column - 1] = (range.Cells[row, column] as Excel.Range);
+                        dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2;
                         //dr[column - 1] = 2;
                     }
                     dt.Rows.Add(dr);

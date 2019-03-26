@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PowerUpp"
         xmlns:codeg="clr-namespace:System;assembly=mscorlib" 
         mc:Ignorable="d"
-        Title="Power Upp" Height="450" Width="800" Background="White">
+        Title="Power Upp" Height="520" Width="820" Background="White">
 
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuExercise">

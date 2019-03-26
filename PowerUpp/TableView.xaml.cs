@@ -26,5 +26,10 @@ namespace PowerUpp
             TableController excelData = new TableController();
             this.dgTable.DataContext = excelData;
         }
+
+        private void btnPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Content = new SelectionView();
+        }
     }
 }
