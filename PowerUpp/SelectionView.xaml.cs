@@ -77,8 +77,10 @@ namespace PowerUpp
 
             // Open Excel table file
             selectCtrl.OpenWorkbook(SelectionController.loadFile);
-            selectCtrl.EditWorksheetCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            selectCtrl.EditTableCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
 
+            selectCtrl.CreateEditWorksheet((Enum)selectedExercise); //TODO see if new worksheet is created and updated
+            selectCtrl.EditExerciseCell(updateCells); // TODO: fix data loaded into wrong WPF table
 
             // Open content into frame with table
             NavigationService.Content = new TableView();
