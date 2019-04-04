@@ -77,13 +77,19 @@ namespace PowerUpp
 
         public void CreateEditWorksheet(Enum exercise) // TODO Change var to int if enum doesn't work
         {
-            //xlApp.Visible = true; // Stops Excel app from loading
-            //xlWorkbook = xlApp.Workbooks.Add();
-            //xlWorksheet = xlWorkbook.Worksheets[1]; // Worksheet the data is written onto, TODO change to exercise
-            //xlWorksheet = (Excel.Worksheet)xlApp.ActiveSheet;
-            //xlWorksheet = xlApp.Sheets.Add(1);
-            xlWorksheet = xlWorkbook.Sheets.Add(); // Add new worksheet to workbook
-            xlWorksheet.Name = exercise.ToString(); // TODO: fix ERROR where name of worksheet already exists
+            try
+            {
+                // Open existing worksheet
+                xlWorksheet = xlApp.Worksheets[exercise.ToString()];
+                xlWorksheet.Select(true);
+            }
+            catch (COMException ex)
+            {
+                // Add worksheet if it does not exist in workbook
+                xlWorksheet = xlWorkbook.Sheets.Add();
+                xlWorksheet.Name = exercise.ToString();
+                Console.WriteLine("Exception: " + ex.Message);
+            }
 
             try
             {
@@ -97,8 +103,6 @@ namespace PowerUpp
 
                 // Row A
                 //xlWorksheet.Cells[2, 1] = "20/10/2018";
-                //xlWorksheet.Cells[3, 1] = "21/10/2018";
-                //xlWorksheet.Cells[4, 1] = "22/10/2018";
 
                 range = (Excel.Range)xlWorksheet.Rows[1];
                 range.Font.Bold = true;
@@ -106,9 +110,9 @@ namespace PowerUpp
 
                 //range.BorderAround2(Excel.XlLineStyle.xlContinuous); // Border around cells
             }
-            catch (Exception exHandle)
+            catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + exHandle.Message);
+                Console.WriteLine("Exception: " + ex.Message);
             }
         }
 
