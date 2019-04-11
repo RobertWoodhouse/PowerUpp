@@ -20,14 +20,15 @@ namespace PowerUpp
         Excel.Application xlApp = new Excel.Application(); // Create new excel app
         Excel.Workbook xlWorkbook; // New workbook
         Excel.Worksheet xlWorksheet; // New worksheet
-        //Excel.Worksheet xlWorksheet; // New worksheet
+        Excel.Worksheet xlWorksheetEx; // New worksheet
 
 
         public void LoadWorkbook(string var)
         {
             xlApp.Visible = true; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Open(var);
-            xlWorksheet = xlWorkbook.Worksheets[1];
+            //xlWorksheet = xlWorkbook.Worksheets[1];
+            xlWorksheet = xlWorkbook.Worksheets["Exercise Table"];
         }
 
         public void CreateWorkbookTable() // TEMP
@@ -80,31 +81,31 @@ namespace PowerUpp
             try
             {
                 // Open existing worksheet
-                xlWorksheet = xlApp.Worksheets[exercise.ToString()];
-                xlWorksheet.Select(true);
+                xlWorksheetEx = xlApp.Worksheets[exercise.ToString()];
+                xlWorksheetEx.Select(true);
             }
             catch (COMException ex)
             {
                 // Add worksheet if it does not exist in workbook
-                xlWorksheet = xlWorkbook.Sheets.Add();
-                xlWorksheet.Name = exercise.ToString();
+                xlWorksheetEx = xlWorkbook.Sheets.Add();
+                xlWorksheetEx.Name = exercise.ToString();
                 Console.WriteLine("Exception: " + ex.Message);
             }
 
             try
             {
                 // Column 1
-                xlWorksheet.Cells[1, 1] = "Date";
-                xlWorksheet.Cells[1, 2] = exercise.ToString();
+                xlWorksheetEx.Cells[1, 1] = "Date";
+                xlWorksheetEx.Cells[1, 2] = exercise.ToString();
 
-                Excel.Range range = (Excel.Range)xlWorksheet.Columns[1];
+                Excel.Range range = (Excel.Range)xlWorksheetEx.Columns[1];
 
                 range.Font.Bold = true;
 
                 // Row A
                 //xlWorksheet.Cells[2, 1] = "20/10/2018";
 
-                range = (Excel.Range)xlWorksheet.Rows[1];
+                range = (Excel.Range)xlWorksheetEx.Rows[1];
                 range.Font.Bold = true;
                 range.Font.Color = System.Drawing.Color.Crimson;
 
@@ -158,12 +159,9 @@ namespace PowerUpp
 
             try
             {
-                Console.WriteLine("Enter cell... ");
-                //xlWorksheet.Cells[exercise, sets] = updateCell;
                 //for (int i = 2; )
-                //xlWorksheet.Cells[2, 1] = thisDay.ToString();
-                xlWorksheet.Cells[2, 1] = date;
-                xlWorksheet.Cells[2, 2] = updateCell;
+                xlWorksheetEx.Cells[2, 1] = date;
+                xlWorksheetEx.Cells[2, 2] = updateCell;
             }
             catch (Exception exMessage)
             {

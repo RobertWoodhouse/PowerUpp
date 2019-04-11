@@ -24,7 +24,8 @@ namespace PowerUpp
         {
             InitializeComponent();
             TableController excelData = new TableController();
-            this.dgTable.DataContext = excelData;
+            this.dgTable.DataContext = excelData; // Load data from spreadsheet into exercises table
+            this.dgExTable.DataContext = excelData; // Load data from spreadsheet into specicic exercises
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)

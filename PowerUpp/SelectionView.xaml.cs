@@ -25,7 +25,8 @@ namespace PowerUpp
             InitializeComponent();
         }
 
-        Enum selectedExercise;
+        //static public Enum selectedExercise;
+        public Enum selectedExercise;
         Enum selectedSets;
         string updateCells;
 
@@ -34,6 +35,7 @@ namespace PowerUpp
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedExercise = (Enum)cboExercise.SelectedItem;
+            TableController.selectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for TableController
         }
 
         private void cboSets_SelectionChanged(object sender, SelectionChangedEventArgs e)
