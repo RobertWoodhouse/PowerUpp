@@ -25,8 +25,7 @@ namespace PowerUpp
             InitializeComponent();
         }
 
-        //static public Enum selectedExercise;
-        public Enum selectedExercise;
+        Enum selectedExercise;
         Enum selectedSets;
         string updateCells;
 
@@ -79,10 +78,10 @@ namespace PowerUpp
 
             // Open Excel table file
             selectCtrl.OpenWorkbook(SelectionController.loadFile);
-            selectCtrl.EditTableCell((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            selectCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells);
 
             selectCtrl.CreateEditWorksheet((Enum)selectedExercise); //TODO see if new worksheet is created and updated
-            selectCtrl.EditExerciseCell(updateCells); // TODO: fix data loaded into wrong WPF table
+            selectCtrl.EditExerciseCellAsync(updateCells); // TODO: fix data loaded into wrong WPF table
 
             // Open content into frame with table
             NavigationService.Content = new TableView();

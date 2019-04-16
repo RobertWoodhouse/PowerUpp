@@ -116,8 +116,25 @@ namespace PowerUpp
                 Console.WriteLine("Exception: " + ex.Message);
             }
         }
-
+        
+        /*
         public void SaveAndQuit(bool saveFile)
+        {
+            if (saveFile)
+            {
+                //xlWorkbook.SaveAs(filePath);
+                xlWorkbook.Save();
+                Console.WriteLine("Spreadsheet saved");
+            }
+            xlWorkbook.Close();
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlWorksheet);
+            Marshal.ReleaseComObject(xlWorkbook);
+            Marshal.ReleaseComObject(xlApp);
+        }
+        */
+
+        async Task SaveAndQuitAsync (bool saveFile)
         {
             if (saveFile)
             {
@@ -134,7 +151,7 @@ namespace PowerUpp
             */
         }
 
-        public void EditTableCell(Enum exercise, Enum sets, string updateCell)
+        public async Task EditTableCellAsync(Enum exercise, Enum sets, string updateCell)
         {
             try
             {
@@ -147,12 +164,13 @@ namespace PowerUpp
             }
             finally // TODO: sort save
             {
-                SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
+                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
+                await SaveAndQuitAsync(true);
                 //SaveAndQuit(false);
             }
         }
 
-        public void EditExerciseCell(string updateCell)
+        public async Task EditExerciseCellAsync(string updateCell)
         {
             DateTime date = DateTime.UtcNow.Date;
             date.ToString("dd/MM/yyyy");
@@ -169,7 +187,8 @@ namespace PowerUpp
             }
             finally // TODO: sort save
             {
-                SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
+                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
+                await SaveAndQuitAsync(true);
                 //SaveAndQuit(false);
             }
         }
