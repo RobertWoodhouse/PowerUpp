@@ -21,6 +21,10 @@ namespace PowerUpp
         Excel.Workbook xlWorkbook; // New workbook
         Excel.Worksheet xlWorksheet; // New worksheet
         Excel.Worksheet xlWorksheetEx; // New worksheet
+        Excel.Range xlRange; // Worksheet column - row range
+
+        int colRange = 0;
+        int rowRange = 0;
 
 
         public void LoadWorkbook(string var)
@@ -172,14 +176,27 @@ namespace PowerUpp
 
         public async Task EditExerciseCellAsync(string updateCell)
         {
-            DateTime date = DateTime.UtcNow.Date;
-            date.ToString("dd/MM/yyyy");
+            xlRange = xlWorksheetEx.UsedRange;
+
+            //colRange = xlRange.Columns.Count;
+            rowRange = xlRange.Rows.Count;
+
+            DateTime dateToday = DateTime.UtcNow.Date;
+            string date = dateToday.ToString("dd/MM/yyyy");
+            string cellValue = ((Excel.Range)xlWorksheetEx.Cells[rowRange, 1]).Value2.ToString();
 
             try
             {
-                //for (int i = 2; )
-                xlWorksheetEx.Cells[2, 1] = date;
-                xlWorksheetEx.Cells[2, 2] = updateCell;
+                if (cellValue == date) // If cell date == date today
+                {
+                    xlWorksheetEx.Cells[rowRange, 1] = date;
+                    xlWorksheetEx.Cells[rowRange, 2] = updateCell;
+                }
+                else 
+                {
+                    xlWorksheetEx.Cells[rowRange + 1, 1] = date;
+                    xlWorksheetEx.Cells[rowRange + 1, 2] = updateCell;
+                }
             }
             catch (Exception exMessage)
             {
