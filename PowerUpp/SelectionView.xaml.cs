@@ -29,6 +29,8 @@ namespace PowerUpp
         Enum selectedSets;
         string updateCells;
 
+        public static string exerciseTitle;
+
         SelectionController selectCtrl = new SelectionController(); // CAUTION causes infinte Excel load
 
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,6 +77,8 @@ namespace PowerUpp
                 MessageBox.Show('"' + updateCells + '"' + " in not a valid number, please enter number larger than 0", "Invalid value");
                 return;
             }
+
+            exerciseTitle = selectedExercise.ToString(); // Assign string value for label title in TableView
 
             // Open Excel table file
             selectCtrl.OpenWorkbook(SelectionController.loadFile);

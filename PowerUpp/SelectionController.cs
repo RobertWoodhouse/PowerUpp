@@ -187,7 +187,7 @@ namespace PowerUpp
 
             try
             {
-                if (cellValue == date) // If cell date == date today
+                if (cellValue == date /*|| cellValue == " " || cellValue == null*/) // If cell date == date today
                 {
                     xlWorksheetEx.Cells[rowRange, 1] = date;
                     xlWorksheetEx.Cells[rowRange, 2] = updateCell;

@@ -24,5 +24,10 @@ namespace PowerUpp
         {
             InitializeComponent();
         }
+
+        private void btnPrevious_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Content = new TableView();
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace PowerUpp
         public TableView()
         {
             InitializeComponent();
+            lblHeaderEx.Content = SelectionView.exerciseTitle;
             TableController excelData = new TableController();
             this.dgTable.DataContext = excelData; // Load data from spreadsheet into exercises table
             this.dgExTable.DataContext = excelData; // Load data from spreadsheet into specicic exercises
@@ -31,6 +32,11 @@ namespace PowerUpp
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Content = new SelectionView();
+        }
+
+        private void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Content = new ChartView();
         }
     }
 }
