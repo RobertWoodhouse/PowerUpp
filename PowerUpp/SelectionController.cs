@@ -183,20 +183,26 @@ namespace PowerUpp
 
             DateTime dateToday = DateTime.UtcNow.Date;
             string date = dateToday.ToString("dd/MM/yyyy");
-            string cellValue = ((Excel.Range)xlWorksheetEx.Cells[rowRange, 1]).Value2.ToString();
+            string cellValue = ((Excel.Range)xlWorksheetEx.Cells[rowRange, 1]).Text;
 
             try
             {
-                if (cellValue == date /*|| cellValue == " " || cellValue == null*/) // If cell date == date today
+                if (cellValue == date || cellValue == "" || cellValue == null) // If cell date == date today
                 {
+                    xlWorksheetEx.Cells[rowRange, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange, 1] = date;
                     xlWorksheetEx.Cells[rowRange, 2] = updateCell;
                 }
                 else 
                 {
-                    xlWorksheetEx.Cells[rowRange + 1, 1] = date;
-                    xlWorksheetEx.Cells[rowRange + 1, 2] = updateCell;
+                    xlWorksheetEx.Cells[rowRange+1, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
+                    xlWorksheetEx.Cells[rowRange+1, 1] = date;
+                    xlWorksheetEx.Cells[rowRange+1, 2] = updateCell;
                 }
+            }
+            catch (AggregateException exMessage)
+            {
+                Console.WriteLine("Aggrage error message " + exMessage);
             }
             catch (Exception exMessage)
             {

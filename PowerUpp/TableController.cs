@@ -12,7 +12,7 @@ namespace PowerUpp
     class TableController
     {
         string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
-        public static Enum selectedExercise; // Get selected exercise from SelectionView
+        public static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
 
         Excel.Application xlApp = new Excel.Application(); // Create new excel app in background process
         Excel.Workbook xlWorkbook; // New workbook

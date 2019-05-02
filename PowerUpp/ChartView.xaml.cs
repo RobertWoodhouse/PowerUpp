@@ -23,6 +23,12 @@ namespace PowerUpp
         public ChartView()
         {
             InitializeComponent();
+            lblHeader.Content = SelectionView.exerciseTitle + " Chart";
+            ChartController chartCtl = new ChartController();
+            chartCtl.CreateChart();
+            this.imgChart.Source = new BitmapImage(new Uri(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\ChartPic.jpg"));
+            //this.dgTable.DataContext = excelData; // Load data from spreadsheet into exercises table
+            //this.dgExTable.DataContext = excelData; // Load data from spreadsheet into specicic exercises
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)

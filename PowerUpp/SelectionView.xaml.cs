@@ -37,6 +37,7 @@ namespace PowerUpp
         {
             selectedExercise = (Enum)cboExercise.SelectedItem;
             TableController.selectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for TableController
+            ChartController.selectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for ChartController
         }
 
         private void cboSets_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,10 +83,10 @@ namespace PowerUpp
 
             // Open Excel table file
             selectCtrl.OpenWorkbook(SelectionController.loadFile);
-            selectCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells);
+            selectCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
 
             selectCtrl.CreateEditWorksheet((Enum)selectedExercise); //TODO see if new worksheet is created and updated
-            selectCtrl.EditExerciseCellAsync(updateCells); // TODO: fix data loaded into wrong WPF table
+            selectCtrl.EditExerciseCellAsync(updateCells).Wait(); // TODO: fix data loaded into wrong WPF table
 
             // Open content into frame with table
             NavigationService.Content = new TableView();

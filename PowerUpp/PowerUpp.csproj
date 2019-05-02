@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChartController.cs" />
     <Compile Include="ChartView.xaml.cs">
       <DependentUpon>ChartView.xaml</DependentUpon>
     </Compile>
@@ -134,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ExercisePic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ChartPic.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
