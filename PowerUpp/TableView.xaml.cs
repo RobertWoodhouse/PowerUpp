@@ -23,7 +23,7 @@ namespace PowerUpp
         public TableView()
         {
             InitializeComponent();
-            lblHeaderEx.Content = SelectionView.exerciseTitle;
+            lblHeaderEx.Content = SelectionView.ExerciseTitle;
             TableController excelData = new TableController();
             this.dgTable.DataContext = excelData; // Load data from spreadsheet into exercises table
             this.dgExTable.DataContext = excelData; // Load data from spreadsheet into specicic exercises

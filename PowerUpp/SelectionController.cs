@@ -23,8 +23,10 @@ namespace PowerUpp
         Excel.Worksheet xlWorksheetEx; // New worksheet
         Excel.Range xlRange; // Worksheet column - row range
 
-        int colRange = 0;
-        int rowRange = 0;
+        private int colRange;
+        private int rowRange;
+
+        //public int RowRange {  get { return rowRange; } set {rowRange = value; } }
 
 
         public void LoadWorkbook(string var)
@@ -32,15 +34,14 @@ namespace PowerUpp
             xlApp.Visible = true; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Open(var);
             //xlWorksheet = xlWorkbook.Worksheets[1];
-            xlWorksheet = xlWorkbook.Worksheets["Exercise Table"];
+            xlWorksheet = xlWorkbook.Worksheets["Exercise Table"]; // Worksheet the data is written onto
         }
 
         public void CreateWorkbookTable() // TEMP
         {
             xlApp.Visible = true; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Add();
-            //xlWorksheet = xlWorkbook.Worksheets[1]; // Worksheet the data is written onto
-            xlWorksheet = (Excel.Worksheet)xlApp.ActiveSheet;
+            xlWorksheet = (Excel.Worksheet)xlApp.ActiveSheet; // Worksheet the data is written onto
             xlWorksheet.Name = "Exercise Table";
 
             try
@@ -107,8 +108,6 @@ namespace PowerUpp
                 range.Font.Bold = true;
 
                 // Row A
-                //xlWorksheet.Cells[2, 1] = "20/10/2018";
-
                 range = (Excel.Range)xlWorksheetEx.Rows[1];
                 range.Font.Bold = true;
                 range.Font.Color = System.Drawing.Color.Crimson;
@@ -180,6 +179,7 @@ namespace PowerUpp
 
             //colRange = xlRange.Columns.Count;
             rowRange = xlRange.Rows.Count;
+            //ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
 
             DateTime dateToday = DateTime.UtcNow.Date;
             string date = dateToday.ToString("dd/MM/yyyy");
@@ -192,12 +192,14 @@ namespace PowerUpp
                     xlWorksheetEx.Cells[rowRange, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange, 1] = date;
                     xlWorksheetEx.Cells[rowRange, 2] = updateCell;
+                    ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
                 }
                 else 
                 {
                     xlWorksheetEx.Cells[rowRange+1, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange+1, 1] = date;
                     xlWorksheetEx.Cells[rowRange+1, 2] = updateCell;
+                    ChartController.BottomRight = "B" + (rowRange + 1); // Set Chart Row Range var in ChartController
                 }
             }
             catch (AggregateException exMessage)

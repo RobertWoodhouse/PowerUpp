@@ -29,15 +29,15 @@ namespace PowerUpp
         Enum selectedSets;
         string updateCells;
 
-        public static string exerciseTitle;
+        public static string ExerciseTitle { get; set; }
 
         SelectionController selectCtrl = new SelectionController(); // CAUTION causes infinte Excel load
 
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedExercise = (Enum)cboExercise.SelectedItem;
-            TableController.selectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for TableController
-            ChartController.selectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for ChartController
+            TableController.SelectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for TableController
+            ChartController.SelectedExercise = (Enum)cboExercise.SelectedItem; // Set selected exercise for ChartController
         }
 
         private void cboSets_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -79,7 +79,7 @@ namespace PowerUpp
                 return;
             }
 
-            exerciseTitle = selectedExercise.ToString(); // Assign string value for label title in TableView
+            ExerciseTitle = selectedExercise.ToString(); // Assign string value for label title in TableView
 
             // Open Excel table file
             selectCtrl.OpenWorkbook(SelectionController.loadFile);

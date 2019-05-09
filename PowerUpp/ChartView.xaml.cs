@@ -23,7 +23,7 @@ namespace PowerUpp
         public ChartView()
         {
             InitializeComponent();
-            lblHeader.Content = SelectionView.exerciseTitle + " Chart";
+            lblHeader.Content = SelectionView.ExerciseTitle + " Chart";
             ChartController chartCtl = new ChartController();
             chartCtl.CreateChart();
             this.imgChart.Source = new BitmapImage(new Uri(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\ChartPic.jpg"));

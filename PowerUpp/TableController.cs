@@ -12,7 +12,13 @@ namespace PowerUpp
     class TableController
     {
         string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
-        public static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
+        private static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
+
+        public static Enum SelectedExercise
+        {
+            get { return selectedExercise; }
+            set { selectedExercise = value; }
+        }
 
         Excel.Application xlApp = new Excel.Application(); // Create new excel app in background process
         Excel.Workbook xlWorkbook; // New workbook
@@ -58,7 +64,7 @@ namespace PowerUpp
             get
             {
                 xlWorkbook = xlApp.Workbooks.Open(filePath);
-                xlWorksheet2 = xlWorkbook.Worksheets[selectedExercise.ToString()]; // Select specific exercise table
+                xlWorksheet2 = xlWorkbook.Worksheets[SelectedExercise.ToString()]; // Select specific exercise table
 
                 int column = 0;
                 int row = 0;
