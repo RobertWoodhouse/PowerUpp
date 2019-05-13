@@ -60,7 +60,7 @@ namespace PowerUpp
                 Title: graphTitle,
                 CategoryTitle: xAxis,
                 ValueTitle: yAxis);
-
+            
             //export chart as picture file
             chart.Export(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\ChartPic.jpg", "JPG", System.Reflection.Missing.Value);
 

@@ -41,20 +41,31 @@ namespace PowerUpp
                 dt.Columns.Add("Exercise");
                 dt.Columns.Add("3 Sets");
                 dt.Columns.Add("2 Sets");
-                dt.Columns.Add("1 Set (Default)");
-                dt.Columns.Add("Misc");
-                for (row = 2; row <= range.Rows.Count; row++)
+                dt.Columns.Add("1 Set");
+                //dt.Columns.Add("1 Set (Default)");
+                //dt.Columns.Add("Misc");
+                try
                 {
-                    DataRow dr = dt.NewRow();
-                    for (column = 1; column <= range.Columns.Count; column++)
+                    for (row = 2; row <= range.Rows.Count; row++)
                     {
-                        dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2;
+                        DataRow dr = dt.NewRow();
+                        for (column = 1; column <= range.Columns.Count; column++)
+                        {
+                            dr[column - 1] = (range.Cells[row, column] as Excel.Range).Value2;
+                        }
+                        dt.Rows.Add(dr);
+                        dt.AcceptChanges();
                     }
-                    dt.Rows.Add(dr);
-                    dt.AcceptChanges();
                 }
-                xlWorkbook.Close(true, Missing.Value, Missing.Value);
-                xlApp.Quit();
+                catch (IndexOutOfRangeException exMessage)
+                {
+                    Console.WriteLine("IndexOutOfRange error message " + exMessage);
+                }
+                finally
+                {
+                    xlWorkbook.Close(true, Missing.Value, Missing.Value);
+                    xlApp.Quit();
+                }
                 return dt.DefaultView;
             }
         }

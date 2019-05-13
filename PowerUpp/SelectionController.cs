@@ -9,8 +9,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PowerUpp
 {
-    enum Exercise { Push_Ups = 2, Squats = 3, Reverse_Leg_Lift = 4, Dumbbell_Side_Bend = 5, Dumbbell_Curls = 6, Standing_Lunges = 7, Boxing = 8, Just_Dance = 9, Sit_Ups = 10, Shoulder_Press = 11 }; // Column A
-    enum Sets { Three_Sets = 2, Two_Sets, One_Set, Misc }; // Row 1
+    enum Exercise { Push_Ups = 2, Squats = 3, Reverse_Leg_Lift = 4, Dumbbell_Side_Bend = 5, Dumbbell_Curls = 6, Standing_Lunges = 7, /* Boxing = 8, Just_Dance = 9, */ Sit_Ups, Shoulder_Press }; // Column A
+    enum Sets { Three_Sets = 2, Two_Sets, One_Set/*, Misc*/ }; // Row 1
     
     class SelectionController
     {
@@ -50,8 +50,8 @@ namespace PowerUpp
                 xlWorksheet.Cells[1, 1] = "Exercise";
                 xlWorksheet.Cells[1, 2] = "3 Sets";
                 xlWorksheet.Cells[1, 3] = "2 Sets";
-                xlWorksheet.Cells[1, 4] = "1 Set (Default)";
-                xlWorksheet.Cells[1, 5] = "Misc";
+                xlWorksheet.Cells[1, 4] = "1 Set";
+                //xlWorksheet.Cells[1, 5] = "Misc"; // REMOVE
 
                 Excel.Range range = (Excel.Range)xlWorksheet.Columns[1];
 
@@ -64,10 +64,10 @@ namespace PowerUpp
                 xlWorksheet.Cells[5, 1] = "Dumbbell Side Bend";
                 xlWorksheet.Cells[6, 1] = "Dumbbell Curls";
                 xlWorksheet.Cells[7, 1] = "Standing Lunges";
-                xlWorksheet.Cells[8, 1] = "Boxing";
-                xlWorksheet.Cells[9, 1] = "Just Dance";
-                xlWorksheet.Cells[10, 1] = "Sit Ups";
-                xlWorksheet.Cells[11, 1] = "Shoulder Press";
+                //xlWorksheet.Cells[8, 1] = "Boxing"; // Remove
+                //xlWorksheet.Cells[9, 1] = "Just Dance"; // Remove
+                xlWorksheet.Cells[8, 1] = "Sit Ups";
+                xlWorksheet.Cells[9, 1] = "Shoulder Press";
 
                 range = (Excel.Range)xlWorksheet.Rows[1];
                 range.Font.Bold = true;
@@ -101,7 +101,10 @@ namespace PowerUpp
             {
                 // Column 1
                 xlWorksheetEx.Cells[1, 1] = "Date";
-                xlWorksheetEx.Cells[1, 2] = exercise.ToString();
+                //xlWorksheetEx.Cells[1, 2] = exercise.ToString(); // Name column
+                xlWorksheetEx.Cells[1, 2] = "3 Sets";
+                xlWorksheetEx.Cells[1, 3] = "2 Sets";
+                xlWorksheetEx.Cells[1, 4] = "1 Set";
 
                 Excel.Range range = (Excel.Range)xlWorksheetEx.Columns[1];
 
@@ -173,7 +176,7 @@ namespace PowerUpp
             }
         }
 
-        public async Task EditExerciseCellAsync(string updateCell)
+        public async Task EditExerciseCellAsync(Enum sets, string updateCell)
         {
             xlRange = xlWorksheetEx.UsedRange;
 
@@ -191,20 +194,22 @@ namespace PowerUpp
                 {
                     xlWorksheetEx.Cells[rowRange, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange, 1] = date;
-                    xlWorksheetEx.Cells[rowRange, 2] = updateCell;
+                    //xlWorksheetEx.Cells[rowRange, 2] = updateCell;
+                    xlWorksheetEx.Cells[rowRange, sets] = updateCell;
                     ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
                 }
-                else 
+                else
                 {
-                    xlWorksheetEx.Cells[rowRange+1, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
-                    xlWorksheetEx.Cells[rowRange+1, 1] = date;
-                    xlWorksheetEx.Cells[rowRange+1, 2] = updateCell;
+                    xlWorksheetEx.Cells[rowRange + 1, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
+                    xlWorksheetEx.Cells[rowRange + 1, 1] = date;
+                    //xlWorksheetEx.Cells[rowRange + 1, 2] = updateCell;
+                    xlWorksheetEx.Cells[rowRange + 1, sets] = updateCell;
                     ChartController.BottomRight = "B" + (rowRange + 1); // Set Chart Row Range var in ChartController
                 }
             }
             catch (AggregateException exMessage)
             {
-                Console.WriteLine("Aggrage error message " + exMessage);
+                Console.WriteLine("Aggregate error message " + exMessage);
             }
             catch (Exception exMessage)
             {
