@@ -14,8 +14,10 @@ namespace PowerUpp
 
         public static Enum SelectedExercise
         {
-            get { return selectedExercise; }
-            set { selectedExercise = value; }
+            //get { return selectedExercise; }
+            //set { selectedExercise = value; }
+            get => selectedExercise;
+            set => selectedExercise = value;
         }
 
         string topLeft = "A1";
@@ -24,8 +26,10 @@ namespace PowerUpp
 
         public static string BottomRight
         {
-            get { return bottomRight; }
-            set { bottomRight = value; }
+            //get { return bottomRight; }
+            //set { bottomRight = value; }
+            get => bottomRight;
+            set => bottomRight = value;
         }
 
         string graphTitle = "<Exercise> Chart";
@@ -48,7 +52,7 @@ namespace PowerUpp
             var chartObject = charts.Add(60, 20, 600, 300) as Excel.ChartObject;
             var chart = chartObject.Chart;
 
-            graphTitle = selectedExercise.ToString() + " Chart";
+            graphTitle = selectedExercise.ToString().Replace("_"," ") + " Chart";
             Console.WriteLine("Chart Row Range = {0}", bottomRight);
 
             range = xlWorksheet.get_Range(topLeft, bottomRight);

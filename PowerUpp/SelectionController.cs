@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -23,7 +19,7 @@ namespace PowerUpp
         Excel.Worksheet xlWorksheetEx; // New worksheet
         Excel.Range xlRange; // Worksheet column - row range
 
-        private int colRange;
+        //private int colRange;
         private int rowRange;
 
         //public int RowRange {  get { return rowRange; } set {rowRange = value; } }
@@ -77,7 +73,7 @@ namespace PowerUpp
             }
             catch (Exception exHandle)
             {
-                Console.WriteLine("Exception: " + exHandle.Message);
+                Console.WriteLine("Exception: " + exHandle.Message + " thrown @ SelectionController/CreateWorkbookTable()");
             }
         }
 
@@ -94,7 +90,7 @@ namespace PowerUpp
                 // Add worksheet if it does not exist in workbook
                 xlWorksheetEx = xlWorkbook.Sheets.Add();
                 xlWorksheetEx.Name = exercise.ToString();
-                Console.WriteLine("Exception: " + ex.Message);
+                Console.WriteLine("COM Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
             }
 
             try
@@ -119,7 +115,7 @@ namespace PowerUpp
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex.Message);
+                Console.WriteLine("Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
             }
         }
         
@@ -166,7 +162,7 @@ namespace PowerUpp
             }
             catch (Exception exMessage)
             {
-                Console.WriteLine("Error message " + exMessage);
+                Console.WriteLine("Exception: " + exMessage + " thrown @ SelectionController/EditTableCellAsync()");
             }
             finally // TODO: sort save
             {
@@ -196,7 +192,9 @@ namespace PowerUpp
                     xlWorksheetEx.Cells[rowRange, 1] = date;
                     //xlWorksheetEx.Cells[rowRange, 2] = updateCell;
                     xlWorksheetEx.Cells[rowRange, sets] = updateCell;
-                    ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
+                    //ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
+                    ChartController.BottomRight = "D" + rowRange; // Set Chart Row Range var in ChartController
+
                 }
                 else
                 {
@@ -204,16 +202,17 @@ namespace PowerUpp
                     xlWorksheetEx.Cells[rowRange + 1, 1] = date;
                     //xlWorksheetEx.Cells[rowRange + 1, 2] = updateCell;
                     xlWorksheetEx.Cells[rowRange + 1, sets] = updateCell;
-                    ChartController.BottomRight = "B" + (rowRange + 1); // Set Chart Row Range var in ChartController
+                    //ChartController.BottomRight = "B" + (rowRange + 1); // Set Chart Row Range var in ChartController
+                    ChartController.BottomRight = "D" + (rowRange + 1); // Set Chart Row Range var in ChartController
                 }
             }
             catch (AggregateException exMessage)
             {
-                Console.WriteLine("Aggregate error message " + exMessage);
+                Console.WriteLine("Aggregate Exception: " + exMessage + " thrown @ SelectionController/EditExerciseCellAsync()");
             }
             catch (Exception exMessage)
             {
-                Console.WriteLine("Error message " + exMessage);
+                Console.WriteLine("Exception: " + exMessage + " thrown @ SelectionController/EditExerciseCellAsync()");
             }
             finally // TODO: sort save
             {

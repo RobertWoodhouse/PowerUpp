@@ -59,7 +59,7 @@ namespace PowerUpp
                 }
                 catch (IndexOutOfRangeException exMessage)
                 {
-                    Console.WriteLine("IndexOutOfRange error message " + exMessage);
+                    Console.WriteLine("IndexOutOfRange Exception: " + exMessage + " thrown @ TableController/DataTable/get");
                 }
                 finally
                 {
