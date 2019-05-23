@@ -139,5 +139,11 @@
   <ItemGroup>
     <Resource Include="Images\ChartPic.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DumbbellIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SquatsIcon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

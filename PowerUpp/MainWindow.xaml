@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PowerUpp"
         xmlns:codeg="clr-namespace:System;assembly=mscorlib" 
         mc:Ignorable="d"
-        Title="Power Upp" Height="520" Width="820" Background="White">
+        Title="Power Upp" Height="520" Width="820" Background="White" Icon="Images/SquatsIcon.ico">
 
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuExercise">
@@ -26,5 +26,15 @@
         <Frame x:Name="frmMainMenu" NavigationUIVisibility="Hidden"/>
         <!-- TEMP Frame possibly, remove-->
         <Image x:Name="imgBackground" Source="Images/ExercisePic.jpg" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="476" Opacity="0.1" Panel.ZIndex="-1"/>
+        <Menu x:Name="menuMain" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Top" Width="Auto" Margin="0,0,0.333,0">
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" x:Name="newBtnMenu" Click="NewBtnMenu_Click" />
+                <Separator />
+                <MenuItem Header="_Exit" x:Name="exitBtnMenu" Click="ExitBtnMenu_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About PowerUpp" x:Name="aboutBtnMenu" Click="AboutBtnMenu_Click" />
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

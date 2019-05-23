@@ -27,5 +27,22 @@ namespace PowerUpp
             InitializeComponent();
             frmMainMenu.Content = new StartView();
         }
+
+        private void NewBtnMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // Add pop up to prompt new spreadsheet
+            frmMainMenu.Content = new SelectionView();
+            SelectionController.loadFile = false;
+        }
+
+        private void ExitBtnMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void AboutBtnMenu_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
