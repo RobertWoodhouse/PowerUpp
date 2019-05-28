@@ -145,5 +145,11 @@
   <ItemGroup>
     <Resource Include="Images\SquatsIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Watermark.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Watermark.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

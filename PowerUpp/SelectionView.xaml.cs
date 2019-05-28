@@ -28,6 +28,8 @@ namespace PowerUpp
         Enum selectedExercise;
         Enum selectedSets;
         string updateCells;
+        string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\Watermark.jpg";
+
 
         public static string ExerciseTitle { get; set; }
 
@@ -47,7 +49,25 @@ namespace PowerUpp
 
         private void txbSets_TextChanged(object sender, TextChangedEventArgs e)
         {
-            updateCells = txbSets.Text;
+            //updateCells = txbSets.Text;
+
+            if (txbSets.Text == "")
+            {
+                // Create an ImageBrush.
+                ImageBrush textImageBrush = new ImageBrush();
+                //textImageBrush.ImageSource = new BitmapImage(new Uri(@"Images\Watermark.jpg", UriKind.Relative));
+                textImageBrush.ImageSource = new BitmapImage(new Uri(filePath, UriKind.Relative));
+                textImageBrush.AlignmentX = AlignmentX.Left;
+                textImageBrush.Stretch = Stretch.None;
+                // Use the brush to paint the button's background.
+                txbSets.Background = textImageBrush;
+
+            }
+            else
+            {
+                txbSets.Background = null;
+                updateCells = txbSets.Text;
+            }
         }
 
         private void btnNext_Click(object sender, RoutedEventArgs e)
