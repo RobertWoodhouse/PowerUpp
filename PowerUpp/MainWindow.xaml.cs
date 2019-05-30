@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Excel = Microsoft.Office.Interop.Excel;
+using Gat.Controls;
 
 namespace PowerUpp
 {
@@ -22,10 +22,13 @@ namespace PowerUpp
 
     public partial class MainWindow : Window
     {
+        About about = new About();
+
         public MainWindow()
         {
             InitializeComponent();
             frmMainMenu.Content = new StartView();
+            //About about = new About();
         }
 
         private void NewBtnMenu_Click(object sender, RoutedEventArgs e)
@@ -42,7 +45,14 @@ namespace PowerUpp
 
         private void AboutBtnMenu_Click(object sender, RoutedEventArgs e)
         {
-
+            //About about = new About();
+            about.ApplicationLogo = new BitmapImage(new Uri(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\SquatsIcon.ico"));
+            about.Version = "v1.05";
+            about.AdditionalNotes = "Power Upp is an application used to track your resistance exercise data over the course of time and present it visually as a chart";
+            about.PublisherLogo = new BitmapImage(new Uri(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\DumbbellIcon.ico"));
+            about.Copyright = "© 2019 Robert Woodhouse \nAll rights reserved";
+            about.HyperlinkText = "https://github.com/RobertWoodhouse/PowerUpp";
+            about.Show();
         }
     }
 }

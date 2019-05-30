@@ -7,7 +7,7 @@
         xmlns:codeg="clr-namespace:System;assembly=mscorlib" 
         mc:Ignorable="d"
         Title="Power Upp" Height="520" Width="820" Background="White" Icon="Images/SquatsIcon.ico">
-
+<!--
     <Window.Resources>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuExercise">
             <ObjectDataProvider.MethodParameters>
@@ -21,7 +21,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </Window.Resources>
-
+-->
     <Grid>
         <Frame x:Name="frmMainMenu" NavigationUIVisibility="Hidden"/>
         <!-- TEMP Frame possibly, remove-->
