@@ -106,8 +106,8 @@ namespace PowerUpp
             selectCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
 
             selectCtrl.CreateEditWorksheet((Enum)selectedExercise); //TODO see if new worksheet is created and updated
-            //selectCtrl.EditExerciseCellAsync(updateCells).Wait(); // TODO: fix data loaded into wrong WPF table
             selectCtrl.EditExerciseCellAsync((Enum)selectedSets, updateCells).Wait();
+            selectCtrl.UpdateExerciseCellsAsync().Wait(); // Updates all blank cells on worksheet
 
 
             // Open content into frame with table

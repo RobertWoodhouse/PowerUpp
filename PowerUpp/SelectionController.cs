@@ -19,11 +19,7 @@ namespace PowerUpp
         Excel.Worksheet xlWorksheetEx; // New worksheet
         Excel.Range xlRange; // Worksheet column - row range
 
-        //private int colRange;
         private int rowRange;
-
-        //public int RowRange {  get { return rowRange; } set {rowRange = value; } }
-
 
         public void LoadWorkbook(string var)
         {
@@ -68,12 +64,10 @@ namespace PowerUpp
                 range = (Excel.Range)xlWorksheet.Rows[1];
                 range.Font.Bold = true;
                 range.Font.Color = System.Drawing.Color.Purple;
-
-                //range.BorderAround2(Excel.XlLineStyle.xlContinuous); // Border around cells
             }
-            catch (Exception exHandle)
+            catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + exHandle.Message + " thrown @ SelectionController/CreateWorkbookTable()");
+                Console.WriteLine("Exception: " + ex.Message + " thrown @ SelectionController/CreateWorkbookTable()");
             }
         }
 
@@ -85,6 +79,15 @@ namespace PowerUpp
                 xlWorksheetEx = xlApp.Worksheets[exercise.ToString()];
                 xlWorksheetEx.Select(true);
             }
+            /*
+            catch (InvalidComObjectException ex)
+            {
+                // Add worksheet if it does not exist in workbook
+                xlWorksheetEx = xlWorkbook.Sheets.Add();
+                xlWorksheetEx.Name = exercise.ToString();
+                Console.WriteLine("COM Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
+            }
+            */
             catch (COMException ex)
             {
                 // Add worksheet if it does not exist in workbook
@@ -110,8 +113,6 @@ namespace PowerUpp
                 range = (Excel.Range)xlWorksheetEx.Rows[1];
                 range.Font.Bold = true;
                 range.Font.Color = System.Drawing.Color.Crimson;
-
-                //range.BorderAround2(Excel.XlLineStyle.xlContinuous); // Border around cells
             }
             catch (Exception ex)
             {
@@ -144,6 +145,7 @@ namespace PowerUpp
                 xlWorkbook.Save();
                 Console.WriteLine("Spreadsheet saved");
             }
+            // Close exe and release COM in task manager
             /*
             xlWorkbook.Close();
             xlApp.Quit();
@@ -213,6 +215,56 @@ namespace PowerUpp
             catch (Exception exMessage)
             {
                 Console.WriteLine("Exception: " + exMessage + " thrown @ SelectionController/EditExerciseCellAsync()");
+            }
+            finally // TODO: sort save
+            {
+                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
+                await SaveAndQuitAsync(true);
+                //SaveAndQuit(false);
+            }
+        }
+
+        public async Task UpdateExerciseCellsAsync()
+        {
+            //int oneSet = 2, twoSet = 3, threeSet = 4;
+            //int[] sets = new int[] { 2, 3, 4 };
+            string[] temp = new string[] { "0", "0", "0" };
+            string cellValue = "";
+            xlRange = xlWorksheetEx.UsedRange;
+            rowRange = xlRange.Rows.Count;
+
+            Console.WriteLine("Row Range = " + rowRange + " in worksheet " + xlWorksheetEx.Name);
+
+            try
+            {
+                for (int row = 2; row <= rowRange; row++)
+                {
+                    for (int col = 2; col <= 4; col++)
+                    {
+                        cellValue = ((Excel.Range)xlWorksheetEx.Cells[row, col]).Text;
+
+                        if(!String.IsNullOrEmpty(cellValue))
+                        {
+                            temp[col - 2] = cellValue;
+                            Console.WriteLine("Cell occupied, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
+
+                        }
+                        else
+                        {
+                            xlWorksheetEx.Cells[row, col] = temp[col - 2];
+                            Console.WriteLine("Cell empty, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
+
+                        }
+                    }
+                }
+            }
+            catch (AggregateException exMessage)
+            {
+                Console.WriteLine("Aggregate Exception: " + exMessage + " thrown @ SelectionController/UpdateExerciseCellsAsync()");
+            }
+            catch (Exception exMessage)
+            {
+                Console.WriteLine("Exception: " + exMessage + " thrown @ SelectionController/UpdateExerciseCellsAsync()");
             }
             finally // TODO: sort save
             {

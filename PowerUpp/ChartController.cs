@@ -15,8 +15,6 @@ namespace PowerUpp
 
         public static Enum SelectedExercise
         {
-            //get { return selectedExercise; }
-            //set { selectedExercise = value; }
             get => selectedExercise;
             set => selectedExercise = value;
         }
@@ -27,8 +25,6 @@ namespace PowerUpp
 
         public static string BottomRight
         {
-            //get { return bottomRight; }
-            //set { bottomRight = value; }
             get => bottomRight;
             set => bottomRight = value;
         }

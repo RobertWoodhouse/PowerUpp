@@ -24,21 +24,8 @@ namespace PowerUpp
         {
             InitializeComponent();
         }
-        /*
-        private void btnLoadXl_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Content = new SelectionView();
-            SelectionController.loadFile = true;
-        }
 
-        private void btnNewXl_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Content = new SelectionView();
-            SelectionController.loadFile = false;
-        }
-        */
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Content = new SelectionView();
             SelectionController.loadFile = true;
