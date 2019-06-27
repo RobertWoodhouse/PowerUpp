@@ -1,37 +1,44 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PowerUpp
 {
-    enum Exercise { Push_Ups = 2, Squats = 3, Reverse_Leg_Lift = 4, Dumbbell_Side_Bend = 5, Dumbbell_Curls = 6, Standing_Lunges = 7, /* Boxing = 8, Just_Dance = 9, */ Sit_Ups, Shoulder_Press }; // Column A
-    enum Sets { Three_Sets = 2, Two_Sets, One_Set/*, Misc*/ }; // Row 1
+    enum Exercise { Push_Ups = 2, Squats = 3, Reverse_Leg_Lift = 4, Dumbbell_Side_Bend = 5, Dumbbell_Curls = 6, Standing_Lunges = 7, Sit_Ups, Shoulder_Press }; // Column A
+    enum Sets { Three_Sets = 2, Two_Sets, One_Set}; // Row 1
     
     class SelectionController
     {
-        string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
+        static string currentDirectory = Directory.GetCurrentDirectory();
+        string filePath = System.IO.Path.Combine(currentDirectory, "Resources", "PowerUppXL.xlsx");
         public static bool loadFile;
 
-        Excel.Application xlApp = new Excel.Application(); // Create new excel app
-        Excel.Workbook xlWorkbook; // New workbook
-        Excel.Worksheet xlWorksheet; // New worksheet
-        Excel.Worksheet xlWorksheetEx; // New worksheet
-        Excel.Range xlRange; // Worksheet column - row range
+        public static Excel.Application xlApp; // Create new excel app
+        public static Excel.Workbook xlWorkbook; // New workbook
+        static Excel.Worksheet xlWorksheet; // New worksheet
+        static Excel.Worksheet xlWorksheetEx; // New worksheet
+        static Excel.Range xlRange; // Worksheet column - row xlRange
 
         private int rowRange;
 
+        public void OpenWorkbook(bool var)
+        {
+            if (var == true) LoadWorkbook(filePath);
+            else CreateWorkbookTable();
+        }
+
         public void LoadWorkbook(string var)
         {
-            xlApp.Visible = true; // Stops Excel app from loading
+            xlApp.Visible = false; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Open(var);
-            //xlWorksheet = xlWorkbook.Worksheets[1];
             xlWorksheet = xlWorkbook.Worksheets["Exercise Table"]; // Worksheet the data is written onto
         }
 
-        public void CreateWorkbookTable() // TEMP
+        public void CreateWorkbookTable()
         {
-            xlApp.Visible = true; // Stops Excel app from loading
+            xlApp.Visible = false; // Stops Excel app from loading
             xlWorkbook = xlApp.Workbooks.Add();
             xlWorksheet = (Excel.Worksheet)xlApp.ActiveSheet; // Worksheet the data is written onto
             xlWorksheet.Name = "Exercise Table";
@@ -43,7 +50,6 @@ namespace PowerUpp
                 xlWorksheet.Cells[1, 2] = "3 Sets";
                 xlWorksheet.Cells[1, 3] = "2 Sets";
                 xlWorksheet.Cells[1, 4] = "1 Set";
-                //xlWorksheet.Cells[1, 5] = "Misc"; // REMOVE
 
                 Excel.Range range = (Excel.Range)xlWorksheet.Columns[1];
 
@@ -56,8 +62,6 @@ namespace PowerUpp
                 xlWorksheet.Cells[5, 1] = "Dumbbell Side Bend";
                 xlWorksheet.Cells[6, 1] = "Dumbbell Curls";
                 xlWorksheet.Cells[7, 1] = "Standing Lunges";
-                //xlWorksheet.Cells[8, 1] = "Boxing"; // Remove
-                //xlWorksheet.Cells[9, 1] = "Just Dance"; // Remove
                 xlWorksheet.Cells[8, 1] = "Sit Ups";
                 xlWorksheet.Cells[9, 1] = "Shoulder Press";
 
@@ -71,7 +75,7 @@ namespace PowerUpp
             }
         }
 
-        public void CreateEditWorksheet(Enum exercise) // TODO Change var to int if enum doesn't work
+        public void CreateEditWorksheet(Enum exercise)
         {
             try
             {
@@ -79,18 +83,8 @@ namespace PowerUpp
                 xlWorksheetEx = xlApp.Worksheets[exercise.ToString()];
                 xlWorksheetEx.Select(true);
             }
-            /*
-            catch (InvalidComObjectException ex)
-            {
-                // Add worksheet if it does not exist in workbook
-                xlWorksheetEx = xlWorkbook.Sheets.Add();
-                xlWorksheetEx.Name = exercise.ToString();
-                Console.WriteLine("COM Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
-            }
-            */
             catch (COMException ex)
             {
-                // Add worksheet if it does not exist in workbook
                 xlWorksheetEx = xlWorkbook.Sheets.Add();
                 xlWorksheetEx.Name = exercise.ToString();
                 Console.WriteLine("COM Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
@@ -100,7 +94,6 @@ namespace PowerUpp
             {
                 // Column 1
                 xlWorksheetEx.Cells[1, 1] = "Date";
-                //xlWorksheetEx.Cells[1, 2] = exercise.ToString(); // Name column
                 xlWorksheetEx.Cells[1, 2] = "3 Sets";
                 xlWorksheetEx.Cells[1, 3] = "2 Sets";
                 xlWorksheetEx.Cells[1, 4] = "1 Set";
@@ -119,69 +112,50 @@ namespace PowerUpp
                 Console.WriteLine("Exception: " + ex.Message + " thrown @ SelectionController/CreateEditWorksheet()");
             }
         }
-        
-        /*
-        public void SaveAndQuit(bool saveFile)
-        {
-            if (saveFile)
-            {
-                //xlWorkbook.SaveAs(filePath);
-                xlWorkbook.Save();
-                Console.WriteLine("Spreadsheet saved");
-            }
-            xlWorkbook.Close();
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlWorksheet);
-            Marshal.ReleaseComObject(xlWorkbook);
-            Marshal.ReleaseComObject(xlApp);
-        }
-        */
 
-        async Task SaveAndQuitAsync (bool saveFile)
+        public static async Task SaveFileAsync (bool saveFile)
         {
             if (saveFile)
             {
-                //xlWorkbook.SaveAs(filePath);
                 xlWorkbook.Save();
                 Console.WriteLine("Spreadsheet saved");
             }
-            // Close exe and release COM in task manager
-            /*
+        }
+
+        public static async Task StartExcelAppAsync()
+        {
+            if (xlApp == null)
+            {
+                xlApp = new Excel.Application(); // Create new excel app
+            }
+        }
+
+        public static async Task StopExcelAppAsync()
+        {
             xlWorkbook.Close();
             xlApp.Quit();
-            Marshal.ReleaseComObject(xlWorksheet);
-            Marshal.ReleaseComObject(xlWorkbook);
-            Marshal.ReleaseComObject(xlApp);
-            */
         }
 
         public async Task EditTableCellAsync(Enum exercise, Enum sets, string updateCell)
         {
             try
             {
-                Console.WriteLine("Enter cell... ");
                 xlWorksheet.Cells[exercise, sets] = updateCell;
             }
             catch (Exception exMessage)
             {
                 Console.WriteLine("Exception: " + exMessage + " thrown @ SelectionController/EditTableCellAsync()");
             }
-            finally // TODO: sort save
+            finally
             {
-                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
-                await SaveAndQuitAsync(true);
-                //SaveAndQuit(false);
+                await SaveFileAsync(true);
             }
         }
 
         public async Task EditExerciseCellAsync(Enum sets, string updateCell)
         {
             xlRange = xlWorksheetEx.UsedRange;
-
-            //colRange = xlRange.Columns.Count;
             rowRange = xlRange.Rows.Count;
-            //ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
-
             DateTime dateToday = DateTime.UtcNow.Date;
             string date = dateToday.ToString("dd/MM/yyyy");
             string cellValue = ((Excel.Range)xlWorksheetEx.Cells[rowRange, 1]).Text;
@@ -192,9 +166,7 @@ namespace PowerUpp
                 {
                     xlWorksheetEx.Cells[rowRange, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange, 1] = date;
-                    //xlWorksheetEx.Cells[rowRange, 2] = updateCell;
                     xlWorksheetEx.Cells[rowRange, sets] = updateCell;
-                    //ChartController.BottomRight = "B" + rowRange; // Set Chart Row Range var in ChartController
                     ChartController.BottomRight = "D" + rowRange; // Set Chart Row Range var in ChartController
 
                 }
@@ -202,9 +174,7 @@ namespace PowerUpp
                 {
                     xlWorksheetEx.Cells[rowRange + 1, 1].NumberFormat = "@"; // Prevent autoformat by setting cell format to "text"
                     xlWorksheetEx.Cells[rowRange + 1, 1] = date;
-                    //xlWorksheetEx.Cells[rowRange + 1, 2] = updateCell;
                     xlWorksheetEx.Cells[rowRange + 1, sets] = updateCell;
-                    //ChartController.BottomRight = "B" + (rowRange + 1); // Set Chart Row Range var in ChartController
                     ChartController.BottomRight = "D" + (rowRange + 1); // Set Chart Row Range var in ChartController
                 }
             }
@@ -218,22 +188,18 @@ namespace PowerUpp
             }
             finally // TODO: sort save
             {
-                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
-                await SaveAndQuitAsync(true);
-                //SaveAndQuit(false);
+                await SaveFileAsync(true);
             }
         }
 
         public async Task UpdateExerciseCellsAsync()
         {
-            //int oneSet = 2, twoSet = 3, threeSet = 4;
-            //int[] sets = new int[] { 2, 3, 4 };
             string[] temp = new string[] { "0", "0", "0" };
             string cellValue = "";
             xlRange = xlWorksheetEx.UsedRange;
             rowRange = xlRange.Rows.Count;
 
-            Console.WriteLine("Row Range = " + rowRange + " in worksheet " + xlWorksheetEx.Name);
+            //Console.WriteLine("Row Range = " + rowRange + " in worksheet " + xlWorksheetEx.Name);
 
             try
             {
@@ -246,14 +212,13 @@ namespace PowerUpp
                         if(!String.IsNullOrEmpty(cellValue))
                         {
                             temp[col - 2] = cellValue;
-                            Console.WriteLine("Cell occupied, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
+                            //Console.WriteLine("Cell occupied, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
 
                         }
                         else
                         {
                             xlWorksheetEx.Cells[row, col] = temp[col - 2];
-                            Console.WriteLine("Cell empty, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
-
+                            //Console.WriteLine("Cell empty, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
                         }
                     }
                 }
@@ -268,16 +233,8 @@ namespace PowerUpp
             }
             finally // TODO: sort save
             {
-                //SaveAndQuit(true); // Saves file before closing, allowing data to be loaded into WPF table
-                await SaveAndQuitAsync(true);
-                //SaveAndQuit(false);
+                await SaveFileAsync(true);
             }
-        }
-
-        public void OpenWorkbook(bool var)
-        {
-            if (var == true) LoadWorkbook(filePath);
-            else CreateWorkbookTable();
         }
     }
 }

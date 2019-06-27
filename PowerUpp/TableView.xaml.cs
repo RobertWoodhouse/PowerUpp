@@ -22,11 +22,18 @@ namespace PowerUpp
     {
         public TableView()
         {
+            //SelectionController.StartExcelAppAsync(); //TEST
+
             InitializeComponent();
             lblHeaderEx.Content = SelectionView.ExerciseTitle.Replace("_", " ");
-            TableController excelData = new TableController();
-            this.dgTable.DataContext = excelData; // Load data from spreadsheet into exercises table
-            this.dgExTable.DataContext = excelData; // Load data from spreadsheet into specicic exercises
+            TableController tableData = new TableController();
+            tableData.OpenExcelWorksheetAsync();
+            this.dgTable.DataContext = tableData; // Load data from spreadsheet into exercises table
+            this.dgExTable.DataContext = tableData; // Load data from spreadsheet into specicic exercises
+
+            //SelectionController.StopExcelAppAsync(); //TEST
+
+            //tableData.StopExcelAppAsync(); //TEST
         }
 
         private void btnPrevious_Click(object sender, RoutedEventArgs e)
@@ -37,6 +44,7 @@ namespace PowerUpp
         private void btnNext_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Content = new ChartView();
+            //tableData.StopExcelAppAsync(); //TEST
         }
     }
 }

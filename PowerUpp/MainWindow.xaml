@@ -3,28 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PowerUpp"
-        xmlns:codeg="clr-namespace:System;assembly=mscorlib" 
         mc:Ignorable="d"
         Title="Power Upp" Height="520" Width="820" Background="White" Icon="Images/SquatsIcon.ico">
-<!--
-    <Window.Resources>
-        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuExercise">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="local:Exercise" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
 
-        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type codeg:Enum}" x:Key="enuSets">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type Type="local:Sets" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </Window.Resources>
--->
     <Grid>
         <Frame x:Name="frmMainMenu" NavigationUIVisibility="Hidden"/>
-        <!-- TEMP Frame possibly, remove-->
         <Image x:Name="imgBackground" Source="Images/ExercisePic.jpg" HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="476" Opacity="0.1" Panel.ZIndex="-1"/>
         <Menu x:Name="menuMain" HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Top" Width="Auto" Margin="0,0,0.333,0">
             <MenuItem Header="_File">

@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
-
 
 namespace PowerUpp
 {
     class ChartController
     {
-        string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\PowerUppXL.xlsx";
+        static string currentDirectory = Directory.GetCurrentDirectory();
+        public static string filePath = System.IO.Path.Combine(currentDirectory, "Images", "ChartPic.jpg");
         private static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
 
         public static Enum SelectedExercise
@@ -19,7 +17,7 @@ namespace PowerUpp
             set => selectedExercise = value;
         }
 
-        string topLeft = "A1";
+        const string topLeft = "A1";
 
         private static string bottomRight = "B6";
 
@@ -30,19 +28,16 @@ namespace PowerUpp
         }
 
         string graphTitle = "<Exercise> Chart";
-        string xAxis = "Date";
-        string yAxis = "Reps";
+        const string xAxis = "Date";
+        const string yAxis = "Reps";
 
         public async Task CreateChart()
         {
             // Open Excel and get first worksheet.
-            Excel.Application xlApp = new Excel.Application(); // Create new excel app in background process
-            Excel.Workbook xlWorkbook; // New workbook
             Excel.Worksheet xlWorksheet; // New worksheet   
             Excel.Range range;
 
-            xlWorkbook = xlApp.Workbooks.Open(filePath);
-            xlWorksheet = xlWorkbook.Worksheets[SelectedExercise.ToString()]; // Select specific exercise table
+            xlWorksheet = SelectionController.xlWorkbook.Worksheets[SelectedExercise.ToString()]; // Select specific exercise table
 
             // Add chart.
             var charts = xlWorksheet.ChartObjects() as Excel.ChartObjects;
@@ -50,23 +45,29 @@ namespace PowerUpp
             var chart = chartObject.Chart;
 
             graphTitle = selectedExercise.ToString().Replace("_"," ") + " Chart";
-            Console.WriteLine("Chart Row Range = {0}", bottomRight);
 
-            range = xlWorksheet.get_Range(topLeft, bottomRight);
-            chart.SetSourceData(range);
+            try
+            {
+                range = xlWorksheet.get_Range(topLeft, bottomRight);
+                chart.SetSourceData(range);
 
-            // Set chart properties.
-            chart.ChartType = Excel.XlChartType.xlLine;
-            chart.ChartWizard(Source: range,
-                Title: graphTitle,
-                CategoryTitle: xAxis,
-                ValueTitle: yAxis);
-            
-            //export chart as picture file
-            chart.Export(@"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\ChartPic.jpg", "JPG", System.Reflection.Missing.Value);
+                // Set chart properties.
+                chart.ChartType = Excel.XlChartType.xlLine;
+                chart.ChartWizard(Source: range,
+                    Title: graphTitle,
+                    CategoryTitle: xAxis,
+                    ValueTitle: yAxis);
 
-            // Save.
-            xlWorkbook.Save();
+                //export chart as picture file
+                chart.Export(filePath, "JPG", System.Reflection.Missing.Value);
+
+                // Save.
+                await SelectionController.SaveFileAsync(true); // TEST
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                Console.WriteLine("Exception: " + ex + " thrown @ ChartController/CreateChart()");
+            }
         }
     }
 }

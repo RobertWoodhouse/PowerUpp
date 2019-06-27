@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PowerUpp
 {
@@ -20,20 +13,20 @@ namespace PowerUpp
     /// </summary>
     public partial class SelectionView : Page
     {
+        Enum selectedExercise;
+        Enum selectedSets;
+        string updateCells;
+        static string currentDirectory = Directory.GetCurrentDirectory();
+        string filePath = System.IO.Path.Combine(currentDirectory, "Images", "Watermark.jpg");
+
         public SelectionView()
         {
             InitializeComponent();
         }
 
-        Enum selectedExercise;
-        Enum selectedSets;
-        string updateCells;
-        string filePath = @"C:\Users\Robert Woodhouse\Google Drive\PowerUpp\Images\Watermark.jpg";
-
-
         public static string ExerciseTitle { get; set; }
 
-        SelectionController selectCtrl = new SelectionController(); // CAUTION causes infinte Excel load
+        SelectionController selection = new SelectionController(); // CAUTION can cause infinte Excel load
 
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -49,19 +42,14 @@ namespace PowerUpp
 
         private void txbSets_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //updateCells = txbSets.Text;
-
             if (txbSets.Text == "")
             {
                 // Create an ImageBrush.
                 ImageBrush textImageBrush = new ImageBrush();
-                //textImageBrush.ImageSource = new BitmapImage(new Uri(@"Images\Watermark.jpg", UriKind.Relative));
                 textImageBrush.ImageSource = new BitmapImage(new Uri(filePath, UriKind.Relative));
                 textImageBrush.AlignmentX = AlignmentX.Left;
                 textImageBrush.Stretch = Stretch.None;
-                // Use the brush to paint the button's background.
                 txbSets.Background = textImageBrush;
-
             }
             else
             {
@@ -101,14 +89,17 @@ namespace PowerUpp
 
             ExerciseTitle = selectedExercise.ToString(); // Assign string value for label title in TableView
 
+            SelectionController.StartExcelAppAsync();
+
             // Open Excel table file
-            selectCtrl.OpenWorkbook(SelectionController.loadFile);
-            selectCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
+            selection.OpenWorkbook(SelectionController.loadFile);
+            selection.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
 
-            selectCtrl.CreateEditWorksheet((Enum)selectedExercise); //TODO see if new worksheet is created and updated
-            selectCtrl.EditExerciseCellAsync((Enum)selectedSets, updateCells).Wait();
-            selectCtrl.UpdateExerciseCellsAsync().Wait(); // Updates all blank cells on worksheet
+            selection.CreateEditWorksheet((Enum)selectedExercise);
+            selection.EditExerciseCellAsync((Enum)selectedSets, updateCells).Wait();
+            selection.UpdateExerciseCellsAsync().Wait(); // Updates all blank cells on worksheet
 
+            //SelectionController.StopExcelAppAsync(); //TEST
 
             // Open content into frame with table
             NavigationService.Content = new TableView();
@@ -118,6 +109,5 @@ namespace PowerUpp
         {
             NavigationService.Content = new StartView();
         }
-        
     }
 }
