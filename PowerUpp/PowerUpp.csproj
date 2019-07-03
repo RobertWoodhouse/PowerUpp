@@ -72,6 +72,7 @@
     <Compile Include="ChartView.xaml.cs">
       <DependentUpon>ChartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MessageBoxController.cs" />
     <Compile Include="SelectionController.cs" />
     <Compile Include="SelectionView.xaml.cs">
       <DependentUpon>SelectionView.xaml</DependentUpon>
