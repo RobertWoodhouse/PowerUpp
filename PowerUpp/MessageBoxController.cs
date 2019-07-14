@@ -28,13 +28,11 @@ namespace PowerUpp
 
             // Center functionality
             vmMessageBox.Position = MessageBoxPosition.CenterOwner;
-            //vmMessageBox.Owner = this;
             vmMessageBox.Owner = window;
 
             Gat.Controls.MessageBoxResult result = vmMessageBox.Show();
             if (result == Gat.Controls.MessageBoxResult.Ok)
             {
-                //frmMainMenu.Content = new SelectionView();
                 frame.Content = new SelectionView();
                 SelectionController.loadFile = false;
             }
@@ -44,7 +42,7 @@ namespace PowerUpp
         {
             about.ApplicationLogo = new BitmapImage(new Uri(IconURI("Images", "SquatsIcon.ico")));
             about.Title = "Power Upp";
-            about.Version = "v1.06";
+            about.Version = "v1.07";
             about.AdditionalNotes = "Power Upp is an application used to track your resistance exercise data over the course of time and present it visually as a chart";
             about.PublisherLogo = new BitmapImage(new Uri(IconURI("Images", "DumbbellIcon.ico")));
             about.Copyright = "© 2019 Robert Woodhouse \nAll rights reserved";

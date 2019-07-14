@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -8,13 +9,7 @@ namespace PowerUpp
 {
     class TableController
     {
-        private static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
-
-        public static Enum SelectedExercise
-        {
-            get { return selectedExercise; }
-            set { selectedExercise = value; }
-        }
+        public static Enum SelectedExercise { get; set; }
 
         static Excel.Worksheet xlWorksheet1; // New worksheet  
         static Excel.Worksheet xlWorksheet2; // New worksheet  
@@ -103,6 +98,7 @@ namespace PowerUpp
 
         public async Task OpenExcelWorksheetAsync()
         {
+            //SelectionController.StartExcelAppAsync();
             xlWorksheet1 = SelectionController.xlWorkbook.Worksheets["Exercise Table"];
             xlWorksheet2 = SelectionController.xlWorkbook.Worksheets[SelectedExercise.ToString()]; // Select specific exercise table
         }

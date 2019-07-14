@@ -9,27 +9,16 @@ namespace PowerUpp
     {
         static string currentDirectory = Directory.GetCurrentDirectory();
         public static string filePath = System.IO.Path.Combine(currentDirectory, "Images", "ChartPic.jpg");
-        private static Enum selectedExercise; // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
 
-        public static Enum SelectedExercise
-        {
-            get => selectedExercise;
-            set => selectedExercise = value;
-        }
+        public static Enum SelectedExercise { get; set; } // Get selected exercise from SelectionView in cboExercise_SelectionChanged()
 
-        const string topLeft = "A1";
+        const string TopLeft = "A1";
 
-        private static string bottomRight = "B6";
-
-        public static string BottomRight
-        {
-            get => bottomRight;
-            set => bottomRight = value;
-        }
+        public static string BottomRight { get; set; } = "B6";
 
         string graphTitle = "<Exercise> Chart";
-        const string xAxis = "Date";
-        const string yAxis = "Reps";
+        const string XAxis = "Date";
+        const string YAxis = "Reps";
 
         public async Task CreateChart()
         {
@@ -44,19 +33,19 @@ namespace PowerUpp
             var chartObject = charts.Add(60, 20, 600, 300) as Excel.ChartObject;
             var chart = chartObject.Chart;
 
-            graphTitle = selectedExercise.ToString().Replace("_"," ") + " Chart";
+            graphTitle = SelectedExercise.ToString().Replace("_"," ") + " Chart";
 
             try
             {
-                range = xlWorksheet.get_Range(topLeft, bottomRight);
+                range = xlWorksheet.get_Range(TopLeft, BottomRight);
                 chart.SetSourceData(range);
 
                 // Set chart properties.
                 chart.ChartType = Excel.XlChartType.xlLine;
                 chart.ChartWizard(Source: range,
                     Title: graphTitle,
-                    CategoryTitle: xAxis,
-                    ValueTitle: yAxis);
+                    CategoryTitle: XAxis,
+                    ValueTitle: YAxis);
 
                 //export chart as picture file
                 chart.Export(filePath, "JPG", System.Reflection.Missing.Value);

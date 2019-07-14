@@ -17,11 +17,28 @@ namespace PowerUpp
 
         public static Excel.Application xlApp; // Create new excel app
         public static Excel.Workbook xlWorkbook; // New workbook
-        static Excel.Worksheet xlWorksheet; // New worksheet
-        static Excel.Worksheet xlWorksheetEx; // New worksheet
+        public static Excel.Worksheet xlWorksheet; // New worksheet
+        public static Excel.Worksheet xlWorksheetEx; // New worksheet
         static Excel.Range xlRange; // Worksheet column - row xlRange
 
         private int rowRange;
+
+        public delegate void ExcelControllerEventHandler(object source, EventArgs args);
+
+        public event ExcelControllerEventHandler ExcelControl;
+
+        public void CloseExcel()
+        {
+            xlWorkbook.Close();
+            xlApp.Quit();
+
+            OnClosedExcel();
+        }
+
+        protected virtual void OnClosedExcel()
+        {
+            ExcelControl?.Invoke(this, EventArgs.Empty);
+        }
 
         public void OpenWorkbook(bool var)
         {
@@ -122,12 +139,9 @@ namespace PowerUpp
             }
         }
 
-        public static async Task StartExcelAppAsync()
+        public static async Task StartExcelAppAsync() 
         {
-            if (xlApp == null)
-            {
-                xlApp = new Excel.Application(); // Create new excel app
-            }
+            if (xlApp == null) xlApp = new Excel.Application(); // Create new excel app
         }
 
         public static async Task StopExcelAppAsync()
@@ -199,8 +213,6 @@ namespace PowerUpp
             xlRange = xlWorksheetEx.UsedRange;
             rowRange = xlRange.Rows.Count;
 
-            //Console.WriteLine("Row Range = " + rowRange + " in worksheet " + xlWorksheetEx.Name);
-
             try
             {
                 for (int row = 2; row <= rowRange; row++)
@@ -209,21 +221,13 @@ namespace PowerUpp
                     {
                         cellValue = ((Excel.Range)xlWorksheetEx.Cells[row, col]).Text;
 
-                        if(!String.IsNullOrEmpty(cellValue))
-                        {
-                            temp[col - 2] = cellValue;
-                            //Console.WriteLine("Cell occupied, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
+                        if(!string.IsNullOrEmpty(cellValue)) temp[col - 2] = cellValue;
 
-                        }
-                        else
-                        {
-                            xlWorksheetEx.Cells[row, col] = temp[col - 2];
-                            //Console.WriteLine("Cell empty, value for ROW " + row + " | COL " + col + " = " + temp[col - 2]);
-                        }
+                        else xlWorksheetEx.Cells[row, col] = temp[col - 2];
                     }
                 }
             }
-            catch (AggregateException exMessage)
+            catch (AggregateException exMessage) 
             {
                 Console.WriteLine("Aggregate Exception: " + exMessage + " thrown @ SelectionController/UpdateExerciseCellsAsync()");
             }

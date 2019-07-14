@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
+using System;
 
 namespace PowerUpp
 {
@@ -14,6 +16,8 @@ namespace PowerUpp
         {
             InitializeComponent();
             frmMainMenu.Content = new StartView();
+
+            this.Closing += new CancelEventHandler(MainWindow_Closing);
         }
 
         private void NewBtnMenu_Click(object sender, RoutedEventArgs e)
@@ -30,6 +34,12 @@ namespace PowerUpp
         private void AboutBtnMenu_Click(object sender, RoutedEventArgs e)
         {
             controller.AboutMenu();
+        }
+
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            SelectionController.StopExcelAppAsync();
+            Application.Current.Shutdown();
         }
     }
 }

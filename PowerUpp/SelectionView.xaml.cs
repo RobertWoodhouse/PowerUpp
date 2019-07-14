@@ -18,15 +18,14 @@ namespace PowerUpp
         string updateCells;
         static string currentDirectory = Directory.GetCurrentDirectory();
         string filePath = System.IO.Path.Combine(currentDirectory, "Images", "Watermark.jpg");
+        public static string ExerciseTitle { get; set; }
+
+        SelectionController selectionCtrl = new SelectionController(); // CAUTION can cause infinte Excel load
 
         public SelectionView()
         {
             InitializeComponent();
         }
-
-        public static string ExerciseTitle { get; set; }
-
-        SelectionController selection = new SelectionController(); // CAUTION can cause infinte Excel load
 
         private void cboExercise_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -65,13 +64,13 @@ namespace PowerUpp
 
             if (selectedExercise == null)
             {
-                MessageBox.Show("Invalid selection, please select Exercise", "Invalid selection");
+                MessageBox.Show("Invalid selectionCtrl, please select Exercise", "Invalid selectionCtrl");
                 return;
             }
 
             if (selectedSets == null)
             {
-                MessageBox.Show("Invalid selection, please select Sets", "Invalid selection");
+                MessageBox.Show("Invalid selectionCtrl, please select Sets", "Invalid selectionCtrl");
                 return;
             }
 
@@ -92,14 +91,12 @@ namespace PowerUpp
             SelectionController.StartExcelAppAsync();
 
             // Open Excel table file
-            selection.OpenWorkbook(SelectionController.loadFile);
-            selection.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
+            selectionCtrl.OpenWorkbook(SelectionController.loadFile);
+            selectionCtrl.EditTableCellAsync((Enum)selectedExercise, (Enum)selectedSets, updateCells).Wait();
 
-            selection.CreateEditWorksheet((Enum)selectedExercise);
-            selection.EditExerciseCellAsync((Enum)selectedSets, updateCells).Wait();
-            selection.UpdateExerciseCellsAsync().Wait(); // Updates all blank cells on worksheet
-
-            //SelectionController.StopExcelAppAsync(); //TEST
+            selectionCtrl.CreateEditWorksheet((Enum)selectedExercise);
+            selectionCtrl.EditExerciseCellAsync((Enum)selectedSets, updateCells).Wait();
+            selectionCtrl.UpdateExerciseCellsAsync().Wait(); // Updates all blank cells on worksheet
 
             // Open content into frame with table
             NavigationService.Content = new TableView();
